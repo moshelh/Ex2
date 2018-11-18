@@ -4,6 +4,7 @@ import Geom.Point3D;
 
 public class MyCoords implements coords_converter {
  final double rErth = 6371000;
+ //check
 	@Override
 	public Point3D add(Point3D gps, Point3D local_vector_in_meter) {
 		//convert meter to radian.
