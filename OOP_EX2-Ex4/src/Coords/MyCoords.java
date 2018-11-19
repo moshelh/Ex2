@@ -1,5 +1,12 @@
 package Coords;
 
+
+
+
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 import Geom.Point3D;
 
 public class MyCoords implements coords_converter {
@@ -74,23 +81,40 @@ public class MyCoords implements coords_converter {
 
 	@Override
 	public double[] azimuth_elevation_dist(Point3D gps0, Point3D gps1) {
-		Point3D p = vector3D(gps0, gps1);
-		double r = Math.sqrt(Math.pow(p.x(), 2)+Math.pow(p.y(), 2) + Math.pow(p.z(), 2));
-		double teta = Math.acos(p.z()/r);
-		double phi = Math.atan(p.y()/p.x());
+		//**azimut***//
+		double longps0 = Math.toRadians(gps0.y()); 
+		double longps1 = Math.toRadians(gps1.y()); 
+		double latgps0 = Math.toRadians(gps0.x()); 
+		double latgps1 = Math.toRadians(gps1.x()); 
+		double delta = longps1 - longps0;
 
-		double x = r*Math.sin(teta) * Math.cos(phi);
-		double y = r* Math.sin(teta) * Math.sin(phi);
-		double z = r* Math.cos(teta);
-		double[] arr =  {x,y,z};
-		return arr;
+		double left = Math.sin(delta)*Math.cos(latgps1);
+		double right = Math.cos(latgps0)*Math.sin(latgps1)-Math.sin(latgps0)*Math.cos(latgps1)*Math.cos(delta);
+		double	azimut = Math.atan2(left, right);
+		//***distance***//
+		double distance = distance3d(gps0,gps1);
+		//***elevation***//
+		azimut = Math.toDegrees(azimut);
+		if(azimut<0) azimut+=360;
+		double high = gps1.z() - gps0.z();
+		double eleveation = Math.toDegrees(Math.asin(high/distance));
 		
+		double arr[] = {azimut,eleveation,distance};
+		return arr;
+
 	}
 
 	@Override
 	public boolean isValid_GPS_Point(Point3D p) {
-		if ((p.x()<180 ||  p.x()>180) || (p.y()<-90 || p.y()>90) || (p.z()<-450 )) return false;
+		if ((p.x()<-180 ||  p.x()>180) || (p.y()<-90 || p.y()>90) || (p.z()<-450 )) return false;
 		return true;
+	}
+	public static void main(String[] args) {
+		Point3D n1 = new Point3D (32.103315,35.209039,670);
+		Point3D n2 = new Point3D (32.106352,35.205225,650);
+		MyCoords m=new MyCoords();
+		double[] d = m.azimuth_elevation_dist(n1, n2);
+		System.out.println(Arrays.toString(d));
 	}
 
 
