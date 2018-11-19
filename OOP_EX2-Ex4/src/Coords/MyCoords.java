@@ -87,7 +87,6 @@ public class MyCoords implements coords_converter {
 		double latgps0 = Math.toRadians(gps0.x()); 
 		double latgps1 = Math.toRadians(gps1.x()); 
 		double delta = longps1 - longps0;
-
 		double left = Math.sin(delta)*Math.cos(latgps1);
 		double right = Math.cos(latgps0)*Math.sin(latgps1)-Math.sin(latgps0)*Math.cos(latgps1)*Math.cos(delta);
 		double	azimut = Math.atan2(left, right);
@@ -98,7 +97,7 @@ public class MyCoords implements coords_converter {
 		if(azimut<0) azimut+=360;
 		double high = gps1.z() - gps0.z();
 		double eleveation = Math.toDegrees(Math.asin(high/distance));
-		
+	
 		double arr[] = {azimut,eleveation,distance};
 		return arr;
 
