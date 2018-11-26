@@ -14,15 +14,37 @@ public class MyCoords implements coords_converter {
  //check
 	@Override
 	public Point3D add(Point3D gps, Point3D local_vector_in_meter) {
-		//convert meter to radian.
-		double dlat=local_vector_in_meter.x()/rErth;
-		double dlon=local_vector_in_meter.y()/(rErth*Math.cos(Math.PI*gps.x()/180));
-		//add vactor to a gps 
-		double lat=gps.x()+dlat*180/Math.PI;
-		double lon =gps.y() +dlon*180/Math.PI;
+		double lonNorm=Math.cos(gps.x()*(Math.PI/180));
+//		//convert meter to radian.
+//		double dlat=local_vector_in_meter.x()/rErth;
+//		double dlon=local_vector_in_meter.y()/(rErth*Math.cos(Math.PI*gps.x()/180));
+//		//add vactor to a gps 
+//		double lat=gps.x()+dlat*180/Math.PI;
+//		double lon =gps.y() +dlon*180/Math.PI;
+//		double z=gps.z()+local_vector_in_meter.z();
+//		Point3D negps = new Point3D (lat,lon,z);
+//		return negps;
+		double x=Math.asin(local_vector_in_meter.x()/rErth)*(180/Math.PI)+gps.x();
+		double y=Math.asin(local_vector_in_meter.y()/rErth*lonNorm)*(180/Math.PI)+gps.y();
 		double z=gps.z()+local_vector_in_meter.z();
-		Point3D negps = new Point3D (lat,lon,z);
-		return negps;
+		if((x>90)||(x<-90)) {
+			System.out.println("Invalid x");
+			return null;
+		}
+		else if(y>180) {
+			y=((y+180)%360)-180;
+			Point3D negps = new Point3D (x,y,z);
+	     	return negps;
+		}
+		else if(y<-180) {
+			y=(y+180)+180;
+			Point3D negps = new Point3D (x,y,z);
+	     	return negps;
+		}
+		else {
+		Point3D negps = new Point3D (x,y,z);
+     	return negps;
+		}
 	}
 
 	@Override

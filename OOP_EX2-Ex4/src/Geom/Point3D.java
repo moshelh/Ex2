@@ -8,6 +8,7 @@ public class Point3D implements Geom_element, Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 	private double _x,_y,_z;
+	 final double rErth = 6371000;
 
 	public Point3D(double x,double y,double z) 
 	{
@@ -44,7 +45,10 @@ public class Point3D implements Geom_element, Serializable
 		
 	public void add(Point3D p) { add(p._x,p._y,p._z);}
 	public void add(double dx, double dy, double dz) {
+		
 			_x+=dx;_y+=dy;_z+=dz;
+		
+		
 		}
 	public void add(double x, double y){this.add(x,y,0);}
 
@@ -56,14 +60,34 @@ public class Point3D implements Geom_element, Serializable
 		return this.distance3D(p2.x(), p2.y(), this.z());
 	}
 	public double distance3D(Point3D p2) {
+		
+		
 		return this.distance3D(p2.x(), p2.y(), p2.z());}
 	public double distance3D(double x, double y , double z)
-	{
-		double dx = _x-x;
-		double dy = _y-y;
-		double dz = _z-z;
-		double t = dx*dx+dy*dy+dz*dz;
-		return Math.sqrt(t);
+	{  //change the dis ,copied from MyChords
+//		double dx = _x-x;
+//		double dy = _y-y;
+//		double dz = _z-z;
+//		double t = dx*dx+dy*dy+dz*dz;
+//		return Math.sqrt(t);
+	double lonNorm=Math.cos(this.x()*Math.PI/180);
+		
+		double diff_lat =x-this.x();
+		
+		double diff_lon=y-this.y();
+		
+		double diff_z=z-this.z();
+		
+		double diff_radianlat=diff_lat*Math.PI/180;
+		
+		double diff_radianlon=diff_lon*Math.PI/180;
+		
+		double toMeterlat=Math.sin(diff_radianlat)*rErth;
+		
+		double toMeterlon=Math.sin(diff_radianlon)*lonNorm*rErth;
+		
+		return Math.sqrt(toMeterlat*toMeterlat+toMeterlon*toMeterlon);
+		
 	}
 
 	public boolean equals(Point3D p2)
