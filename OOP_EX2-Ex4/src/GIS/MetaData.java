@@ -14,12 +14,16 @@ public class MetaData implements Meta_data{
 	public int indexOfElement;
 	public csvData d1;
 	
+	
 	static final long duration =(long)(((120*60))*1000);
+
   public MetaData(csvData d,int index) {
          this.d1=d;
      this.indexOfElement=index;
 	  this.s=d.getLine(index);
 	  this.header=d.getHeader();
+	   
+	  
   }
     @SuppressWarnings("deprecation")
 	@Override
@@ -49,14 +53,16 @@ public class MetaData implements Meta_data{
 	}
 	public   String toString() {
 		String s2="";
-		 int indexM=d1.getIndexOfHeader("MAC");
+		
 		 int indexS=d1.getIndexOfHeader("SSID");
-		 int indexC=d1.getIndexOfHeader("Channel");
-		 int indexA=d1.getIndexOfHeader("AccuracyMeters");
-		 int indexT=d1.getIndexOfHeader("Type");
-		 s2="MAC : "+s[indexM]+"\n"+" SSID : "+s[indexS]+"\n"+" Channel : "+s[indexC]+"\n"+" AccuracyMeters:"+s[indexA]+"\n"+" Type:"+s[indexT]+"\n";
+		int indexC=d1.getIndexOfHeader("Channel");
+		int indexA=d1.getIndexOfHeader("AccuracyMeters");
+		int indexT=d1.getIndexOfHeader("Type");
+		
+		 s2=s[indexS]+","+s[indexA]+","+s[indexT];
 		return s2;
 		
 	}
+	
 
 }

@@ -64,30 +64,13 @@ public class Point3D implements Geom_element, Serializable
 		
 		return this.distance3D(p2.x(), p2.y(), p2.z());}
 	public double distance3D(double x, double y , double z)
-	{  //change the dis ,copied from MyChords
-//		double dx = _x-x;
-//		double dy = _y-y;
-//		double dz = _z-z;
-//		double t = dx*dx+dy*dy+dz*dz;
-//		return Math.sqrt(t);
-	double lonNorm=Math.cos(this.x()*Math.PI/180);
-		
-		double diff_lat =x-this.x();
-		
-		double diff_lon=y-this.y();
-		
-		double diff_z=z-this.z();
-		
-		double diff_radianlat=diff_lat*Math.PI/180;
-		
-		double diff_radianlon=diff_lon*Math.PI/180;
-		
-		double toMeterlat=Math.sin(diff_radianlat)*rErth;
-		
-		double toMeterlon=Math.sin(diff_radianlon)*lonNorm*rErth;
-		
-		return Math.sqrt(toMeterlat*toMeterlat+toMeterlon*toMeterlon);
-		
+	{   //change the dis ,copied from MyChords
+		double dx = _x-x;
+		double dy = _y-y;
+		double dz = _z-z;
+		double t = dx*dx+dy*dy+dz*dz;
+		return Math.sqrt(t);
+	
 	}
 
 	public boolean equals(Point3D p2)

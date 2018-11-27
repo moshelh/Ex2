@@ -15,6 +15,8 @@ public class MyCoords implements coords_converter {
 	@Override
 	public Point3D add(Point3D gps, Point3D local_vector_in_meter) {
 		double lonNorm=Math.cos(gps.x()*(Math.PI/180));
+		if(!isValid_GPS_Point(gps)) 
+			return null;
 //		//convert meter to radian.
 //		double dlat=local_vector_in_meter.x()/rErth;
 //		double dlon=local_vector_in_meter.y()/(rErth*Math.cos(Math.PI*gps.x()/180));
@@ -31,21 +33,22 @@ public class MyCoords implements coords_converter {
 			System.out.println("Invalid x");
 			return null;
 		}
-		else if(y>180) {
+		if(y>180) {
 			y=((y+180)%360)-180;
-			Point3D negps = new Point3D (x,y,z);
-	     	return negps;
+			
 		}
-		else if(y<-180) {
+		 if(y<-180) {
 			y=(y+180)+180;
-			Point3D negps = new Point3D (x,y,z);
-	     	return negps;
+			
 		}
-		else {
+		
 		Point3D negps = new Point3D (x,y,z);
-     	return negps;
+		if(isValid_GPS_Point(negps))
+			return negps;
+		return null;
+     	
 		}
-	}
+	
 
 	@Override
 	public double distance3d(Point3D gps0, Point3D gps1) {

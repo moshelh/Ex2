@@ -3,14 +3,29 @@ package File_format;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Iterator;
+
+import GIS.GISElement;
+import GIS.GIS_element;
+import GIS.GisLayer;
+import GIS.GisProject;
 
 public class toKml {
-	public csvReader csv;
-	public static void  toKml( String  s,String output)
-	{
+//	public String s;
+//	public GisLayer g11;
+	
+	//public csvData d1;
+	
+	public static void  projectToKml( GisProject project ,String output)
+	{    Iterator pro=project.iterator();
+	      
 		ArrayList<String> content=new ArrayList<String>();
-		ArrayList<String[]> data=csvReader.csvReader(s);
-
+//	     
+//		 csvData d1=new csvData(s);
+//		 datatolayer l1=new datatolayer(d1);
+//		 GisLayer g1=l1.insert();
+//		 Iterator i1= g1.iterator();
+		 
 		String KmlStart="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"+"<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n"+" <Document>";
 		content.add(KmlStart);
 		String kmlend = " </Document>\n"+"</kml>";
@@ -18,17 +33,25 @@ public class toKml {
 			
 			 FileWriter fw = new FileWriter(output);
 			 BufferedWriter bw = new BufferedWriter(fw);
-		        for (int i = 1; i < data.size(); i++) {
-		            String[] s1 = data.get(i);
+		        //for (int i = 1; i < g1.size(); i++) {
+		        	//get index of each element in kml 
+			 while(pro.hasNext()) {
+				 GisLayer pr=(GisLayer) pro.next();
+				 Iterator i1= pr.iterator();
+			 while (i1.hasNext()) {
+		         GISElement gis = (GISElement) i1.next();
+		           String[]data=gis.getData().toString().split(",");
 		            String kmlelement ="<Placemark>\n" +
-		                    "<name>"+s1[1]+"</name>\n" +
-		                    "<description>"+s1[0]+","+s1[2]+","+s1[3]+","+s1[4]+","+s1[9]+","+s1[10]+"</description>\n"+
+	                    "<name>"+ data[0]+"</name>\n" +
+		                    "<description>"+data[1]+"&"+data[2]+"</description>\n"+
 		                    "<Point>\n"+
-		                    "<coordinates>"+s1[7]+"&"+s1[6]+"&"+s1[8]+"</coordinates>" +
+		                    "<coordinates>"+gis.getPoint().y()+"&"+gis.getPoint().x()+"&"+gis.getPoint().z()+"</coordinates>" +
 		                    "</Point>\n" +
 		                    "</Placemark>\n";
 		            content.add(kmlelement);
 		        }
+		}
+			 
 		        content.add(kmlend);
 		        String csv = content.toString().replaceAll(",", "").replace("[", "").replace("]", "");
 		        csv=csv.replaceAll("&",",");
@@ -37,19 +60,57 @@ public class toKml {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+		
 	}
 	
 	
 	
 
-	public static void main(String[] args) {
-		// csvReader("C:\\Users\\User\\git\\Ex2-Ex4\\OOP_EX2-Ex4\\src\\File_format\\WigleWifi_20171201110209.csv");
-		 //"C:\\Users\\User\\git\\Ex2-Ex4\\OOP_EX2-Ex4\\src\\File_format\\WigleWifi_20171201110209.csv";
-		String s="C:\\Users\\User\\git\\Ex2-Ex4\\OOP_EX2-Ex4\\src\\File_format\\WigleWifi_20171203085618.csv";
-		String s1="C:\\Users\\User\\git\\Ex2-Ex4\\OOP_EX2-Ex4\\src\\File_format\\test.kml";
-		toKml(s,s1);
+public static void kmltoLayer(String s,String Output) {
+	
+		ArrayList<String> content=new ArrayList<String>();
+//	     
+		 csvData d1=new csvData(s);
+		 datatolayer l1=new datatolayer(d1);
+		 GisLayer g1=l1.insert();
+		 Iterator i1= g1.iterator();
+		 
+		String KmlStart="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"+"<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n"+" <Document>";
+		content.add(KmlStart);
+		String kmlend = " </Document>\n"+"</kml>";
+		try {
+			
+			 FileWriter fw = new FileWriter(Output);
+			 BufferedWriter bw = new BufferedWriter(fw);
+		        //for (int i = 1; i < g1.size(); i++) {
+		        	//get index of each element in kml 
+			
+				
+			 while (i1.hasNext()) {
+		         GISElement gis = (GISElement) i1.next();
+		           String[]data=gis.getData().toString().split(",");
+		            String kmlelement ="<Placemark>\n" +
+	                    "<name>"+ data[0]+"</name>\n" +
+		                    "<description>"+data[1]+"&"+data[2]+"</description>\n"+
+		                    "<Point>\n"+
+		                    "<coordinates>"+gis.getPoint().y()+"&"+gis.getPoint().x()+"&"+gis.getPoint().z()+"</coordinates>" +
+		                    "</Point>\n" +
+		                    "</Placemark>\n";
+		            content.add(kmlelement);
+		        }
 		
-	}
+			 
+		        content.add(kmlend);
+		        String csv = content.toString().replaceAll(",", "").replace("[", "").replace("]", "");
+		        csv=csv.replaceAll("&",",");
+		        bw.write(csv);
+		        bw.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	 
+}
 
 }
 
