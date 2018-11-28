@@ -10,22 +10,14 @@ import java.util.Arrays;
 import Geom.Point3D;
 
 public class MyCoords implements coords_converter {
+	//Earth radius.
  final double rErth = 6371000;
- //check
+
 	@Override
 	public Point3D add(Point3D gps, Point3D local_vector_in_meter) {
 		double lonNorm=Math.cos(gps.x()*(Math.PI/180));
 		if(!isValid_GPS_Point(gps)) 
 			return null;
-//		//convert meter to radian.
-//		double dlat=local_vector_in_meter.x()/rErth;
-//		double dlon=local_vector_in_meter.y()/(rErth*Math.cos(Math.PI*gps.x()/180));
-//		//add vactor to a gps 
-//		double lat=gps.x()+dlat*180/Math.PI;
-//		double lon =gps.y() +dlon*180/Math.PI;
-//		double z=gps.z()+local_vector_in_meter.z();
-//		Point3D negps = new Point3D (lat,lon,z);
-//		return negps;
 		double x=Math.asin(local_vector_in_meter.x()/rErth)*(180/Math.PI)+gps.x();
 		double y=Math.asin(local_vector_in_meter.y()/rErth*lonNorm)*(180/Math.PI)+gps.y();
 		double z=gps.z()+local_vector_in_meter.z();
@@ -52,6 +44,10 @@ public class MyCoords implements coords_converter {
 
 	@Override
 	public double distance3d(Point3D gps0, Point3D gps1) {
+		if(!isValid_GPS_Point(gps0)||!isValid_GPS_Point(gps1))
+			return Double.MAX_VALUE;
+		else {
+			
 		double lonNorm=Math.cos(gps0.x()*Math.PI/180);
 		
 		double diff_lat =gps1.x()-gps0.x();
@@ -69,43 +65,43 @@ public class MyCoords implements coords_converter {
 		double toMeterlon=Math.sin(diff_radianlon)*lonNorm*rErth;
 		
 		return Math.sqrt(toMeterlat*toMeterlat+toMeterlon*toMeterlon);
-		
+		}
 		
 	}
 
 	@Override
 	public Point3D vector3D(Point3D gps0, Point3D gps1) {
-		   // Common values
-	    double b        = rErth + gps1.x();
-	    double c        = rErth + gps0.x();
-
-	    double b2       = b*b;
-	    double c2       = c*c;
-	    double bc2      = 2*b*c;
-
-	    // Longitudinal calculations
-	    double alpha    = gps1.y() - gps0.y();
-	    // Conversion to radian
-	    alpha = alpha * Math.PI / 180;
-	    // Small-angle approximation
-	    double cos      = 1 - alpha*alpha/2; //Math.cos(alpha);
-	    // Use the law of cosines / Al Kashi theorem
-	    double x        = Math.sqrt(b2 + c2 - bc2*cos);
-
-	    // Repeat for latitudinal calculations
-	    alpha      = gps1.x() - gps0.x();
-	    alpha      = alpha * Math.PI / 180;
-	    double cos1 = 1 - alpha*alpha/2; //Math.cos(alpha);
-	    double y   = Math.sqrt(b2 + c2 - bc2*cos1);
+		if(!isValid_GPS_Point(gps0)||!isValid_GPS_Point(gps1))
+			return null;
+		else {
+		double lonNorm=Math.cos(gps0.x()*Math.PI/180);
+		
+		double diff_lat =gps1.x()-gps0.x();
+		
+		double diff_lon=gps1.y()-gps0.y();
+		
+		double diff_z=gps1.z()-gps0.z();
+		
+		double diff_radianlat=diff_lat*Math.PI/180;
+		
+		double diff_radianlon=diff_lon*Math.PI/180;
+		
+		double toMeterlat=Math.sin(diff_radianlat)*rErth;
+		
+		double toMeterlon=Math.sin(diff_radianlon)*lonNorm*rErth;
 
 	    // Obtain vertical difference, too
 	    double z   = gps1.z() - gps0.z();
 
-	    return new Point3D(x, y, z);
+	    return new Point3D(toMeterlat, toMeterlon, z);
+	}
 	}
 
 	@Override
 	public double[] azimuth_elevation_dist(Point3D gps0, Point3D gps1) {
+		if(!isValid_GPS_Point(gps0)||!isValid_GPS_Point(gps1))
+			return null;
+		else {
 		//**azimut***//
 		double longps0 = Math.toRadians(gps0.y()); 
 		double longps1 = Math.toRadians(gps1.y()); 
@@ -125,7 +121,7 @@ public class MyCoords implements coords_converter {
 	
 		double arr[] = {azimut,eleveation,distance};
 		return arr;
-
+		}
 	}
 
 	@Override
@@ -137,8 +133,10 @@ public class MyCoords implements coords_converter {
 		Point3D n1 = new Point3D (32.103315,35.209039,670);
 		Point3D n2 = new Point3D (32.106352,35.205225,650);
 		MyCoords m=new MyCoords();
+		Point3D n3=m.vector3D(n1, n2);
 		double[] d = m.azimuth_elevation_dist(n1, n2);
 		System.out.println(Arrays.toString(d));
+		System.out.println(n3);
 	}
 
 

@@ -20,7 +20,7 @@ public class csvReader {
 	            {
 	                String[] userInfo = line.split(cvsSplitBy);
 	                data.add(userInfo);
-	                System.out.println(Arrays.toString(userInfo));
+	                //System.out.println(Arrays.toString(userInfo));
 	               // System.out.println("Mac Adress: " + userInfo[0] + " , SSID: " + userInfo[1] +
 	                	//	" AuthMode " + userInfo[2] + " Firtseen " + userInfo[3] );
                   

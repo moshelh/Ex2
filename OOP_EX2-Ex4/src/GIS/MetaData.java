@@ -25,12 +25,16 @@ public class MetaData implements Meta_data{
 	   
 	  
   }
+  /**
+   * the function returns the the utc. 
+   */
     @SuppressWarnings("deprecation")
 	@Override
 	public long getUTC()  {
 		   int index=d1.getIndexOfHeader("FirstSeen");
 			String time = s[index];                              
-			SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyy hh:mm");//without seconds!!doesnt read!
+//			SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyy hh:mm");//without seconds!!doesnt read!
+			SimpleDateFormat df = new SimpleDateFormat("yyy-dd-MM hh:mm:ss");
 			java.util.Date dt;
 			try {
 				dt = df.parse(time);

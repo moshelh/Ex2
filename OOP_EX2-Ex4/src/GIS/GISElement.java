@@ -57,6 +57,13 @@ public class GISElement implements GIS_element {
 	public Point3D getPoint() {
 		return this.p;
 	}
+	public String time() {
+		String temp=this.d1.getElement("FirstSeen",this.index);
+		temp=temp.replaceAll(" ","T");
+		temp=temp+"Z";
+		return temp;
+		
+	}
 	
 
 

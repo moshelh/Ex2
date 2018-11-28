@@ -2,15 +2,24 @@ package File_format;
 import java.util.ArrayList;
 
 import Geom.Point3D;
-
+/**
+ * csvData holds the data which was taken by the csvReader ,using an ArrayList.
+ * @author ariel and moshe 
+ *
+ */
 public class csvData {
 	
 	private csvReader c;
 	String[] header;
 	ArrayList<String[]> a1;
-	
+	/**
+	 * 
+	 * @param s is a location of the file.
+	 */
 	public csvData(String s) {
+		//filling the arrayList with information by the csvReader which gets a location.
 		a1=c.csvReader(s);
+		//filling the header array with the first line of the arrayList
 		header=a1.get(0);
 	}
 
@@ -21,6 +30,11 @@ public class csvData {
 	public ArrayList<String[]> getA1() {
 		return a1;
 	}
+	/**
+	 * 
+	 * @param s the header of which raw to return .
+	 * @return the raw of the header.
+	 */
 	
 public String getRaw(String s) {
 	int index=0;
@@ -29,14 +43,25 @@ public String getRaw(String s) {
 		if(this.header[i].equals(s))
 			index=i;
 	}
-	for(int i=0;i<a1.size();i++) {
+	for(int i=1;i<a1.size();i++) {
 		ans+=a1.get(i)[index]+",";
 	}
 	return ans;
 }
+/**
+ * 
+ * @param i is the line of data 
+ * @return the line of data accordingly .
+ */
 public String[] getLine(int i) {
 	return a1.get(i);
 }
+/**
+ * 
+ * @param s is the header 
+ * @param index is which line to take the information from.
+ * @return the specific element
+ */
 public String getElement(String s,int index) {
 	int temp=0;
 	for(int i=0;i<this.header.length;i++) {
@@ -45,6 +70,11 @@ public String getElement(String s,int index) {
 	}
 	return a1.get(index)[temp];
 }
+/**
+ * 
+ * @param s the header
+ * @return the index of the header.
+ */
 public int getIndexOfHeader(String s) {
 	int index=0;
 	for(int i=0;i<this.header.length;i++) {
