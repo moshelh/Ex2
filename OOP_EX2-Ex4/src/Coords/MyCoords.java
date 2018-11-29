@@ -12,16 +12,23 @@ import Geom.Point3D;
 public class MyCoords implements coords_converter {
 	//Earth radius.
  final double rErth = 6371000;
-
+/**
+ * computes a new point which is the gps point transformed by a 3D vector (in meters).
+ */
 	@Override
 	public Point3D add(Point3D gps, Point3D local_vector_in_meter) {
 		double lonNorm=Math.cos(gps.x()*(Math.PI/180));
 		if(!isValid_GPS_Point(gps)) 
 			return null;
-		double x=Math.asin(local_vector_in_meter.x()/rErth)*(180/Math.PI)+gps.x();
-		double y=Math.asin(local_vector_in_meter.y()/rErth*lonNorm)*(180/Math.PI)+gps.y();
+		//***convert meter to radians ***
+		double meterTolat =Math.asin(local_vector_in_meter.x()/rErth)*(180/Math.PI);
+		double meterTolong=Math.asin(local_vector_in_meter.y()/rErth*lonNorm)*(180/Math.PI);
+		// *** add vector after convert ***
+		double x=meterTolat+gps.x();
+		double y=meterTolong+gps.y();
 		double z=gps.z()+local_vector_in_meter.z();
-		if((x>90)||(x<-90)) {
+		// if the x point  is above and under a 90 degrees the point is illegal.
+		if((x>90)||(x<-90)) { 
 			System.out.println("Invalid x");
 			return null;
 		}
@@ -41,7 +48,14 @@ public class MyCoords implements coords_converter {
      	
 		}
 	
-
+/**
+ * 
+ * The function computes the 3D distance (in meters) between the two gps like points
+ * @param gps0 a Point3d
+ * @param gps1 a Point3d
+ * @return the distance 
+ * 
+ */
 	@Override
 	public double distance3d(Point3D gps0, Point3D gps1) {
 		if(!isValid_GPS_Point(gps0)||!isValid_GPS_Point(gps1))
@@ -68,7 +82,12 @@ public class MyCoords implements coords_converter {
 		}
 		
 	}
-
+/**
+ * The function computes the 3D vector (in meters) between two gps like points
+ * @param gps0 a Point3D
+ * @param gps1 a Point3D
+ * @return Point3D vector
+ */
 	@Override
 	public Point3D vector3D(Point3D gps0, Point3D gps1) {
 		if(!isValid_GPS_Point(gps0)||!isValid_GPS_Point(gps1))
@@ -96,7 +115,12 @@ public class MyCoords implements coords_converter {
 	    return new Point3D(toMeterlat, toMeterlon, z);
 	}
 	}
-
+/**
+ * The function computes the polar representation of the 3D vector be gps0 to gps1
+ * @param gps0 a Point3D
+ * @param gps1 a Point3D
+ * @return an array contains azimuth, elevation, and distance.
+ */
 	@Override
 	public double[] azimuth_elevation_dist(Point3D gps0, Point3D gps1) {
 		if(!isValid_GPS_Point(gps0)||!isValid_GPS_Point(gps1))
@@ -123,7 +147,15 @@ public class MyCoords implements coords_converter {
 		return arr;
 		}
 	}
-
+/**
+ * The funcrion checks if the Point3D is valid ,meaning :
+ * x:[-180,+180]
+ * y:[-90,+90];
+ * z:[-450,+inf]
+ * @param p a Poin3D.
+ * @return true if this point is a valid .
+ * 
+ */
 	@Override
 	public boolean isValid_GPS_Point(Point3D p) {
 		if ((p.x()<-180 ||  p.x()>180) || (p.y()<-90 || p.y()>90) || (p.z()<-450 )) return false;
