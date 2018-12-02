@@ -18,8 +18,6 @@ public static void main(String[] args) {
 		MetaData m1=new MetaData(d1,5);
 		long f=m1.getUTC();
 		System.out.println(f);
-
-int b=0;
 }
 	
 
