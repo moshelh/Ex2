@@ -28,16 +28,16 @@ public class MyCoords implements coords_converter {
 		double y=meterTolong+gps.y();
 		double z=gps.z()+local_vector_in_meter.z();
 		// if the x point  is above and under a 90 degrees the point is illegal.
-		if((x>90)||(x<-90)) { 
+		if((y>90)||(y<-90)) { 
 			System.out.println("Invalid x");
 			return null;
 		}
-		if(y>180) {
-			y=((y+180)%360)-180;
+		if(x>180) {
+			x=((x+180)%360)-180;
 			
 		}
-		 if(y<-180) {
-			y=(y+180)+180;
+		 if(x<-180) {
+			x=(y+180)+180;
 			
 		}
 		
