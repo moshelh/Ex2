@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class csvReader {
+	/**
+	 * 
+	 * @param S is a location for the csv file
+	 * @return  ArrayList which holds the information of the csv file.
+	 */
 	public  static ArrayList<String[]> csvReader(String S){
 			String csvFile = S;
 	        String line = "";
@@ -17,13 +22,10 @@ public class csvReader {
 	            
 	        	
 	            while ((line = br.readLine()) != null) 
-	            {
+	            {   //put the information into an array,in the end ,add to the array list.
 	                String[] userInfo = line.split(cvsSplitBy);
 	                data.add(userInfo);
-	                //System.out.println(Arrays.toString(userInfo));
-	               // System.out.println("Mac Adress: " + userInfo[0] + " , SSID: " + userInfo[1] +
-	                	//	" AuthMode " + userInfo[2] + " Firtseen " + userInfo[3] );
-                  
+	              
 	            }
 	            
 

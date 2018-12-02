@@ -3,9 +3,15 @@ package GIS;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
-
+/**
+ * the class implements GIS_project by creating a hash set of layers.
+ * having all the operation of the hash set
+ * @author ariel and moshe 
+ *
+ */
 public class GisProject implements GIS_project {
-	HashSet<GIS_layer> Glayer = new HashSet<GIS_layer>();
+	private HashSet<GIS_layer> Glayer = new HashSet<GIS_layer>();
+	private MetaDataProject metadata=new MetaDataProject();
 	@Override
 	public boolean add(GIS_layer arg0) {
 		// TODO Auto-generated method stub
@@ -87,7 +93,7 @@ public class GisProject implements GIS_project {
 	@Override
 	public Meta_data get_Meta_data() {
 		// TODO Auto-generated method stub
-		return null;
+		return metadata ;
 	}
 
 }

@@ -38,7 +38,7 @@ public static void listFilesForFolder(final File folder) {
 
 public static void main(String[]args) {
 	// definding a file where to save the kml of the project.
-	String output="C:\\CSVMULT\\test10.kml";
+	String output="C:\\CSVMULT\\test11.kml";
 	GisProject project=new GisProject();
 	final File folder = new File("C:\\Users\\ariel\\git");
     listFilesForFolder(folder);
@@ -47,12 +47,13 @@ public static void main(String[]args) {
 		 csvData d1=new csvData(filenames.get(i));
 		 datatolayer l1=new datatolayer(d1);
 		 GisLayer g1=l1.insert();
+		 
 		 project.add(g1);
 		
 	
 		 
 	}
- 
+
 	//after finishing running , send the project to kml ,and create one kml file for all the project. 
 	toKml. projectToKml(project, output);
 	

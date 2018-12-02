@@ -13,7 +13,7 @@ public class csvData {
 	String[] header;
 	ArrayList<String[]> a1;
 	/**
-	 * 
+	 * A COONSTRUCTOR
 	 * @param s is a location of the file.
 	 */
 	public csvData(String s) {
@@ -32,8 +32,8 @@ public class csvData {
 	}
 	/**
 	 * 
-	 * @param s the header of which raw to return .
-	 * @return the raw of the header.
+	 * @param s the header of which row to return .
+	 * @return the row of the header.
 	 */
 	
 public String getRaw(String s) {
@@ -82,9 +82,6 @@ public int getIndexOfHeader(String s) {
 			index=i;
 	}return index;
 }
-//public Point3D getP(int index) {
-//	
-//}
 
 	
 }

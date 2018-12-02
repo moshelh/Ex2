@@ -8,11 +8,16 @@ import java.util.Iterator;
 import Geom.Geom_element;
 
 public class GisLayer implements GIS_layer {
-	HashSet<GIS_element> Geom = new HashSet<GIS_element>();
-	//MetaData m1=new MetaData();
+	/**
+	 * The class implements the Gis_layer by creating a new  hash set which holds all the elements.
+	 * having all the operations in the hash set.
+	 */
+	private HashSet<GIS_element> Geom = new HashSet<GIS_element>();
+	private MetaDataLayer metadata=new MetaDataLayer();
 	public GisLayer(HashSet<GIS_element> s1) {
 		this.Geom=s1;
 	}
+	
 	@Override
 	public boolean add(GIS_element arg0) {
 		// TODO Auto-generated method stub
@@ -99,7 +104,7 @@ public class GisLayer implements GIS_layer {
 	public Meta_data get_Meta_data() {
 		// TODO Auto-generated method stub
 		
-		return null;
+		return metadata;
 	}
 
 }

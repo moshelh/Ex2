@@ -69,7 +69,7 @@ public class MyCoords implements coords_converter {
 		double diff_lon=gps1.y()-gps0.y();
 		
 		double diff_z=gps1.z()-gps0.z();
-		
+		//***convert meter to radians ***
 		double diff_radianlat=diff_lat*Math.PI/180;
 		
 		double diff_radianlon=diff_lon*Math.PI/180;
@@ -100,7 +100,7 @@ public class MyCoords implements coords_converter {
 		double diff_lon=gps1.y()-gps0.y();
 		
 		double diff_z=gps1.z()-gps0.z();
-		
+		//***convert meter to radians ***
 		double diff_radianlat=diff_lat*Math.PI/180;
 		
 		double diff_radianlon=diff_lon*Math.PI/180;
@@ -161,15 +161,7 @@ public class MyCoords implements coords_converter {
 		if ((p.x()<-180 ||  p.x()>180) || (p.y()<-90 || p.y()>90) || (p.z()<-450 )) return false;
 		return true;
 	}
-	public static void main(String[] args) {
-		Point3D n1 = new Point3D (32.103315,35.209039,670);
-		Point3D n2 = new Point3D (32.106352,35.205225,650);
-		MyCoords m=new MyCoords();
-		Point3D n3=m.vector3D(n1, n2);
-		double[] d = m.azimuth_elevation_dist(n1, n2);
-		System.out.println(Arrays.toString(d));
-		System.out.println(n3);
-	}
+
 
 
 }
