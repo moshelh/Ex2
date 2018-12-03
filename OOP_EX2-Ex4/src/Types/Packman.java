@@ -22,6 +22,7 @@ public class Packman implements GIS_element{
 	private double Speed;
 	private double radiusOfeat;
 	private MyCoords mm;
+	int a=0;
 	
 	
 	public Packman(csvData d1,int index) {
