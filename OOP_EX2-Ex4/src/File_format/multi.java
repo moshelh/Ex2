@@ -16,6 +16,7 @@ static LinkedList<String> filenames = new LinkedList<String>();
  * the function reads a multi csv pages from the folder .
  * @param folder is a location to start searching .
  */
+//the source:https://stackoverflow.com/questions/28236098/how-to-read-multiple-csv-files-from-a-folder-in-java
 public static void listFilesForFolder(final File folder) {
 	//running over the files , if there is a csv file , add the path to filenamse linkedList.
     for (final File fileEntry : folder.listFiles()) {

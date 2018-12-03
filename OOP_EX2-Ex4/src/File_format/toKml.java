@@ -17,6 +17,7 @@ public class toKml {
 	 * @param project to convert to kml.
 	 * @param output to where to save the kml page.
 	 */
+	//source:was taken from the moodle
 	public static void  projectToKml( GisProject project ,String output)
 	
 	{   //iterator for the project.
