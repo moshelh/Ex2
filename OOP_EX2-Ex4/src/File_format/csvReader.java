@@ -19,7 +19,8 @@ public class csvReader {
 	        String cvsSplitBy = ",";
 	        ArrayList<String[]> data=new ArrayList<String[]>();
 	        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) 
-	        {   br.readLine();
+        {   
+	        	//br.readLine();
 	            
 	        	
 	            while ((line = br.readLine()) != null) 

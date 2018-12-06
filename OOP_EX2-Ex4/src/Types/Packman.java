@@ -22,10 +22,9 @@ public class Packman implements GIS_element{
 	private double Speed;
 	private double radiusOfeat;
 	private MyCoords mm;
-	int a=0;
-	
 	
 	public Packman(csvData d1,int index) {
+		System.out.println("packman");
 		this.d=d1;
 		this.index=index;
 		s=d1.getLine(index);
@@ -35,6 +34,7 @@ public class Packman implements GIS_element{
 		int indexOfid=d1.getIndexOfHeader("id");
 		int indexOfspeed=d1.getIndexOfHeader("Speed/Weight");
 		int indexOfradius=d1.getIndexOfHeader("Radius");
+		
 		this.Speed=Double.parseDouble(s[indexOfspeed]);
 		this.radiusOfeat=Double.parseDouble(s[indexOfradius]);
 		this.id=s[indexOfid];

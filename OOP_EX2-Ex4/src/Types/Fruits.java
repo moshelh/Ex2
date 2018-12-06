@@ -20,6 +20,7 @@ public class Fruits implements GIS_element {
 	private MetaDataF m1;
 	Point3D p;
 	public Fruits(csvData d1,int index){
+		System.out.println("F");
 		this.d=d1;
 		this.index=index;
 		s=d1.getLine(index);
